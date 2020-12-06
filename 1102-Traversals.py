@@ -2,6 +2,9 @@ class Graph:
     def __init__(self):
         self.graph = {}
 
+    def test(self):
+        print(self.graph)
+
     def addEdge(self, u, v):
         if not self.graph.get(u):
             self.graph[str(u)] = [v]
@@ -25,21 +28,24 @@ class Graph:
     def BFS(self):
         visited = [False] * (len(self.graph))
         queue = []
-        s = list(self.graph.keys())[0]
-        queue.append(s)
-        visited[self.get_idx(s)] = True
-        while queue:
-            s = queue.pop(0)
-            print(s, end=" ")
-            for i in self.graph[s]:
-                idx = self.get_idx(i)
-                if visited[idx] == False:
-                    queue.append(i)
-                    visited[idx] = True
+        for v in self.graph:
+            if not visited[self.get_idx(v)]:
+                queue.append(v)
+                visited[self.get_idx(v)] = True
+            while len(queue):
+                now_ = queue.pop(0)
+                print(now_, end=' ')
+                for x in self.graph[now_]:
+                    if not visited[self.get_idx(x)]:
+                        queue.append(x)
+                        #print(x, end=' ')
+                        visited[self.get_idx(x)] = True
+        #print(visited)
 
     def DFS(self):
         visited = set()
         for vertex in list(self.graph):
+            #print(vertex)
             if vertex not in visited:
                 self.DFSUtil(vertex, visited)
 
